@@ -1,0 +1,47 @@
+{% extends 'partials/base.html' %}
+{% block title %}Order Page{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 10px;">
+    <div>
+        <h1>Order Details</h1>
+    </div>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Odered by</th>
+                <th scope="col">Product</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Per Product Amount</th>
+                <th scope="col">Total Amount</th>
+                <th scope="col">Odered On</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in order %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.customer }}</td>
+                <td>{{ order.name.name }}</td>
+                <td>{{ order.order_quantity }}</td>
+                <td>{{ order.name.unit_price }}</td>
+                <td>{{ order.total_amount }}</td>
+                <td>{{ order.placed_at }}</td>
+                {% if order.payment_status == "Pending" %}
+                    <td><label style="color: rgb(18, 132, 224);">{{ order.payment_status }}</label></td>
+                {% endif %}
+                {% if order.payment_status == "Delivered" %}
+                    <td><label style="color: rgb(20, 134, 16);">{{ order.payment_status }}</label></td>
+                {% endif %}
+                {% if order.payment_status == "Cancelled" %}
+                    <td><label style="color: rgb(255, 0, 0);">{{ order.payment_status }}</label></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

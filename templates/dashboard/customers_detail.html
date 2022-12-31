@@ -1,0 +1,146 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}Customer Detail Page{% endblock %}
+
+
+{% block content %}
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <script src="http://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="https://kit.fontawesome.com/d115501a02.js" crossorigin="anonymous"></script>
+</head>
+<div class="container" style="padding: 10px;">
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-10">
+                        <div class="card-body text-center">
+                            <img src="{{ user.profile.image.url }}" alt="profile-image" class="rounded-circle img-fluid"
+                                style="width: 150px;">
+                            <h5>{{ customer.username }}</h5>
+                            <br>
+                            <div>
+                                <p class="mb-0"><i class="fa-solid fa-user"></i> {{ customer.first_name }} {{ customer.last_name }}</p>
+                            </div>
+                            <hr>
+                            <div>
+                                <p class="mb-0"><i class="fa-solid fa-envelope"></i> {{ customer.email }}</p>
+                            </div>
+                            <hr>
+                            <div>
+                                <p class="mb-0"><i class="fa-solid fa-phone"></i> {{ customer.profile.phone }}</p>
+                            </div>
+                            <hr>
+                            <div>
+                                <p class="mb-0"><i class="fa-solid fa-building"></i> {{ customer.profile.company }}</p>
+                            </div>
+                            <hr>
+                            <a class="btn btn-primary btn-sm" href="{% url 'dashboard-customer-edit' customer.id %}"><i
+                                    class="fa-solid fa-pen-to-square"></i></a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'dashboard-customer-delete' customer.id %}"><i
+                                    class="fa-solid fa-trash"></i></a>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-8">
+                    <div>
+                        <h3>Orders Details</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-10 mb-md-3">
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Product Ordered</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Price per item</th>
+                                                <th scope="col">Date ordered</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        {% for item in orders %}
+                                        {% if item.customer == customer %}
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">{{ item.id }}</th>
+                                                <td>{{ item.name.name }}</td>
+                                                <td>{{ item.order_quantity }}</td>
+                                                <td>{{ item.name.unit_price }}</td>
+                                                <td>{{ item.placed_at }}</td>
+                                                <td>{{ item.payment_status }}</td>
+                                            </tr>
+                                        </tbody>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- <div class="container">
+    <div class="row my-4">
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    Customer Detail Page
+                </div>
+                <div class="row p-3">
+                    <div class="col-md-8">
+                        <table class="table table-borderless">
+                            <thead>
+                                <span class="h4">Porfile Information</span class="h4">
+                                <hr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>Name</th>
+                                    <td>{{ customers.username }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{{ customers.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone</th>
+                                    <td>{{ customers.profile.phone }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td>{{ customers.profile.address }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <img class="img-thumbnail" src="{{ customers.profile.image.url }}" alt="profile-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+{% endblock %}
